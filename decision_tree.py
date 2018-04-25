@@ -4,14 +4,16 @@ import matplotlib.pyplot as plt
 from sklearn import metrics  
 
 dataset = pd.read_csv('./SRData.csv')  
+#print(dataset.describe())  
 
-dataset.describe()  
+passrate = 0.5
+testsize = 0.2
 
 X = dataset.drop('Placed', axis=1)  
 y = dataset['Placed'] 
 
 from sklearn.model_selection import train_test_split  
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0) 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testsize, random_state=0) 
 
 from sklearn.tree import DecisionTreeRegressor  
 regressor = DecisionTreeRegressor()  
@@ -21,7 +23,7 @@ y_pred = regressor.predict(X_test)
 
 df=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred})  
 
-passrate = 0.2
+
 #An array used to convert the predicted success into binary
 PS = []
 
@@ -32,7 +34,7 @@ n = 0
 #A count of correctness
 CC = 0
 
-
+#Converting to a 0 or 1 with a given pass rate then determining if it is correct or not
 for index, row in df.iterrows():
     if row[1] >= passrate:
         PS.append(1)
@@ -46,14 +48,20 @@ for index, row in df.iterrows():
         Correct.append(0)
     n+=1
 
+cdf=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred, 'PS': PS}) 
+
+print(cdf)
+
 print("Accuracy", CC/n)
-print("Predicted Score", PS)
-print("Correct", Correct)
+#print("Predicted Score", PS)
+#print("Correct", Correct)
 
 print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
 print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))  
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))  
 
-#print(df.sort_index(0))
-#print(df.at[55,'Predicted'])
-#print(row[0])
+sj = {'AMFR':[0.379310], 'OFR':[0.437500], 'SFR':[0.421875], 'PFR':[0.381119]}
+sjdf = pd.DataFrame(data=sj)
+
+sj_pred = regressor.predict(sjdf)
+print("Single job prediction", sj_pred)
