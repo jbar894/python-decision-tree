@@ -32,7 +32,6 @@ n = 0
 #A count of correctness
 CC = 0
 
-x = 0
 
 for index, row in df.iterrows():
     if row[1] >= passrate:
