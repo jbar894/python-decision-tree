@@ -23,7 +23,6 @@ y_pred = regressor.predict(X_test)
 
 df=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred})  
 
-
 #An array used to convert the predicted success into binary
 PS = []
 
@@ -49,7 +48,6 @@ for index, row in df.iterrows():
     n+=1
 
 cdf=pd.DataFrame({'Actual':y_test, 'Predicted':y_pred, 'PS': PS}) 
-
 print(cdf)
 
 print("Accuracy", CC/n)
@@ -60,8 +58,9 @@ print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
 print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))  
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))  
 
-sj = {'AMFR':[0.379310], 'OFR':[0.437500], 'SFR':[0.421875], 'PFR':[0.381119]}
-sjdf = pd.DataFrame(data=sj)
+#single job testing
+#sj = {'AMFR':[0.379310], 'OFR':[0.437500], 'SFR':[0.421875], 'PFR':[0.381119]}
+#sjdf = pd.DataFrame(data=sj)
 
-sj_pred = regressor.predict(sjdf)
-print("Single job prediction", sj_pred)
+#sj_pred = regressor.predict(sjdf)
+#print("Single job prediction", sj_pred)
