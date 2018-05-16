@@ -3,11 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt  
 from sklearn import metrics  
 
-dataset = pd.read_csv('./SRData.csv')  
-#print(dataset.describe())  
-
 passrate = 0.5
 testsize = 0.2
+
+#read in data
+dataset = pd.read_csv('./SRData.csv')  
 
 X = dataset.drop('Placed', axis=1)  
 y = dataset['Placed'] 
@@ -59,8 +59,15 @@ print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))  
 
 #single job testing
-#sj = {'AMFR':[0.379310], 'OFR':[0.437500], 'SFR':[0.421875], 'PFR':[0.381119]}
-#sjdf = pd.DataFrame(data=sj)
+def singlePredict(job):
+    jobDF = pd.DataFrame(data=job)
+    jobPredicted = sj_pred = regressor.predict(jobDF) 
+    return jobPredicted
 
-#sj_pred = regressor.predict(sjdf)
-#print("Single job prediction", sj_pred)
+
+sj = {'CCFR':[0.7634], 'AMFR':[0.379310], 'OFR':[0.437500], 'SFR':[0.421875], 'PFR':[0.381119]}
+x = singlePredict(sj)
+
+print("Single job prediction", x[0])
+
+
