@@ -1,7 +1,10 @@
 import pandas as pd  
 import numpy as np  
-import matplotlib.pyplot as plt  
 from sklearn import metrics  
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeRegressor  
+from sklearn.model_selection import train_test_split  
+from sklearn.externals import joblib
 
 passrate = 0.5
 testsize = 0.2
@@ -12,12 +15,13 @@ dataset = pd.read_csv('./SRData.csv')
 X = dataset.drop('Placed', axis=1)  
 y = dataset['Placed'] 
 
-from sklearn.model_selection import train_test_split  
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testsize, random_state=0) 
 
-from sklearn.tree import DecisionTreeRegressor  
 regressor = DecisionTreeRegressor()  
 regressor.fit(X_train, y_train) 
+
+joblib.dump(regressor, 'model.joblib')
+
 
 y_pred = regressor.predict(X_test)
 
